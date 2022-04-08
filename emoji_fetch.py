@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd
 from pathlib import Path
+import re
 
 url = "https://unicode.org/emoji/charts/full-emoji-list.html"
 page = urlopen(url)
@@ -30,7 +31,12 @@ for rows in table_rows:
         code_list = unicode.split("+")
 
         emoji_code = code_list[-1]
-        emoji_code = "\\U000" + emoji_code
+
+        length = len(emoji_code)
+        diff = int(8 - length)
+        zeros = str("0" * diff)
+
+        emoji_code = "\\U" + zeros + emoji_code
 
         data["code"].append(emoji_code)
 
@@ -46,7 +52,9 @@ for rows in table_rows:
         emoji_name = emoji_name.replace(",", "")
         emoji_name = emoji_name.replace("\"", "")
         emoji_name = emoji_name.replace("flag_", "")
-        emoji_name = emoji_name.replace("_o’clock", "")
+        emoji_name = emoji_name.replace("o clock", "")
+        emoji_name = emoji_name.replace(" s ", "s ")
+
         emoji_name = emoji_name.replace("’", "")
         emoji_name = emoji_name.replace(".", "")
         emoji_name = emoji_name.replace("-", "_")
