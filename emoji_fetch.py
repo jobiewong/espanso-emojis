@@ -3,11 +3,14 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd
+from pathlib import Path
 
 url = "https://unicode.org/emoji/charts/full-emoji-list.html"
 page = urlopen(url)
 html = page.read().decode("utf-8")
 soup = BeautifulSoup(html, "html.parser")
+
+OUTPUT_DIR = str(Path.cwd()) + "/emojis.csv"
 
 table_rows = soup.find_all('tr')
 
@@ -54,3 +57,5 @@ for rows in table_rows:
 
 df = pd.DataFrame(data=data)
 df.head()
+
+df.to_csv(OUTPUT_DIR, index=False)
