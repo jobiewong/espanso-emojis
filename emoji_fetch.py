@@ -15,6 +15,15 @@ OUTPUT_DIR = str(Path.cwd()) + "/emojis.csv"
 
 table_rows = soup.find_all('tr')
 
+def combine_codes(code):
+    # convert codes to string and convert to correct format
+    code_list = code.split("+")
+    emoji_code = code_list[-1]
+    length = len(emoji_code)
+    diff = int(8 - length)
+    zeros = str("0" * diff)
+    return "\\U" + zeros + emoji_code
+
 # create dictionary to store values
 data = {"code": [],
         "name": []}
@@ -26,17 +35,9 @@ for rows in table_rows:
     emoji_names = rows.find_all(class_="name")
 
     for code in emoji_codes:
-        # convert codes to string and convert to correct format
         unicode = str(code.text)
-        code_list = unicode.split("+")
-
-        emoji_code = code_list[-1]
-
-        length = len(emoji_code)
-        diff = int(8 - length)
-        zeros = str("0" * diff)
-
-        emoji_code = "\\U" + zeros + emoji_code
+        code_list = unicode.split(" ")
+        emoji_code = "".join(list(map(combine_codes, code_list)))
 
         data["code"].append(emoji_code)
 
