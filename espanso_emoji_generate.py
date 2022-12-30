@@ -6,6 +6,8 @@ import re
 import json
 import numpy as np
 from pathlib import Path
+import yaml
+from gensim.utils import deaccent
 
 url = "https://unicode.org/emoji/charts/full-emoji-list.html"
 page = urlopen(url)
@@ -33,9 +35,9 @@ def combine_codes(code):
     return "\\U" + zeros + emoji_code
 
 def shortcode_cleanup(shortcode):
-    shortcode = shortcode.replace("-", " ") # remove - (e.g. see-no-evil_monkey)
     shortcode = shortcode.replace(".", "") # remove . (e.g. mrs._claus)
     shortcode = shortcode.replace(":", "") # replace : (e.g. woman: blond hair)
+    shortcode = deaccent(shortcode) # remove accents from shortcodes
     return shortcode
 
 def convert_to_spaces(df, convert):
@@ -65,10 +67,11 @@ def generate_yaml(df):
         body = body + emoji_item
 
     yml_output = matches + body
+    yml_safe = yaml.safe_load(yml_output)
 
     # save to yml file
-    with open(PACKAGE_OUTPUT_DIR, "w") as f:
-        f.write(yml_output)
+    with open(PACKAGE_OUTPUT_DIR, "w") as file:
+        yaml.dump(yml_safe, file)
 
 
 ### Fetching
@@ -98,6 +101,7 @@ for rows in table_rows:
     for name in emoji_names:
         # convert names to strings, remove ⊛ symbols and reformat certain emojis (e.g. family and flags)
         emoji_name = str(name.text)
+        emoji_name = shortcode_cleanup(emoji_name)
 
         if emoji_name[0] == "⊛":
             emoji_name = emoji_name[2:]
@@ -112,11 +116,13 @@ shortcodes_dict = {"unicode": [],
 for row in shortcodes_df.index:
     emoji = shortcodes_df.loc[row, "char"]
     unicode_string = emoji.encode('unicode-escape').decode('ASCII').upper()
+    unicode_string = shortcode_cleanup(unicode_string)
 
     shortcodes_dict["unicode"].append(unicode_string)
     shortcodes_dict["shortcode"].append(row)
 
 shortcode_lookup = pd.DataFrame(data=shortcodes_dict)
+shortcode_lookup.head()
 
 df = pd.DataFrame(data=data)
 
