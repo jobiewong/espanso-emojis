@@ -56,15 +56,15 @@ for rows in table_rows:
         emoji_name = emoji_name.replace("o clock", "")
         emoji_name = emoji_name.replace(" s ", "s ")
 
-        emoji_name = emoji_name.replace("’", "")
-        emoji_name = emoji_name.replace(".", "")
-        emoji_name = emoji_name.replace("-", "_")
-        emoji_name = emoji_name.replace("“", "_")
-        emoji_name = emoji_name.replace("”", "_")
+        # emoji_name = emoji_name.replace("’", "")
+        # emoji_name = emoji_name.replace(".", "")
+        # emoji_name = emoji_name.replace("-", "_")
+        # emoji_name = emoji_name.replace("“", "_")
+        # emoji_name = emoji_name.replace("”", "_")
 
         data["name"].append(emoji_name.lower())
 
 df = pd.DataFrame(data=data)
 df.head()
 
-df.to_csv(OUTPUT_DIR, index=False)
+# df.to_csv(OUTPUT_DIR, index=False)
