@@ -20,3 +20,9 @@ Shortcodes are used to match those found on popular platforms such as Slack and 
 1. Navigate to [Releases](https://github.com/jobiewong/espanso-emojis/releases/tag/espanso)
 2. Decide whether you want to install the version that uses **underscores** or **spaces** and download the zip file for the relevant version
 3. Navigate to your Espanso directory (on Windows this is located in %appdata% by default) and extract the zip file into `/match/packages`
+
+### CLI
+1. Ensure Espanso is properly installed and accessible through the terminal
+2. Paste the following code into your command line: `espanso install actually-all-emojis`
+3. Hit enter
+> ⚠️ The version of this package on the espanso hub may not be the most up-to-date!
