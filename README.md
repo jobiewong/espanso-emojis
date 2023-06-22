@@ -23,12 +23,6 @@ This approach installs the package directly from the Git repository as the exter
 2. Paste the following code into your command line: `espanso package install actually-all-emojis --git https://github.com/jobiewong/espanso-emojis -e` (or `actually-all-emojis-spaces`)
 3. Hit <kbd>Enter</kbd>
 
-### Manual
-
-1. Navigate to [Releases](https://github.com/jobiewong/espanso-emojis/releases/tag/espanso)
-2. Decide whether you want to install the version that uses **underscores** or **spaces** and download the zip file for the relevant version
-3. Navigate to your Espanso directory (on Windows this is located in %appdata% by default) and extract the zip file into `/match/packages`
-
 ### CLI (from Hub)
 
 This approach installs the package from Espanso Hub.
@@ -38,3 +32,10 @@ This approach installs the package from Espanso Hub.
 3. Hit <kbd>Enter</kbd>
 
 > ⚠️ The version of this package on the espanso hub may not be the most up-to-date!
+
+
+### Manual
+
+1. Navigate to [Releases](https://github.com/jobiewong/espanso-emojis/releases/tag/espanso)
+2. Decide whether you want to install the version that uses **underscores** or **spaces** and download the zip file for the relevant version
+3. Navigate to your Espanso directory (on Windows this is located in %appdata% by default) and extract the zip file into `/match/packages`
